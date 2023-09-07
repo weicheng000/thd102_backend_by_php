@@ -43,7 +43,7 @@ if (isset($data['Events']))
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 // 使用參數化來更新數據
-                $updateQuery = "UPDATE `PetpaGo`.`HOTELINFO` 
+                $updateQuery = "UPDATE `HOTELINFO` 
             SET `HOTELNAME` = $HotelName, 
                 `HOTELADD` = $Address, 
                 `HOTELINTRO` = $Comment, 
