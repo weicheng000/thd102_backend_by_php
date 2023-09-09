@@ -26,7 +26,7 @@ try {
     } else {
         // Email doesn't exist, proceed with the insertion
         $query = "INSERT INTO `MEMBER` (`NAME`, `EMAIL`, `PASSWORD`, `BRD`, `PHONE`, `ADDRESS`, `STATUS`, `POINTS`) 
-                  VALUES (:name, :email, :pwd, '1990-01-01', '000000000', '請設定你的地址', '正常', '0');";
+                  VALUES (:name, :email, :pwd, '1990-01-01', '0123456789', '請設定你的地址', '正常', '0');";
 
         $stmt = $pdo->prepare($query);
 
