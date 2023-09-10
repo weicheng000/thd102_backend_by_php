@@ -25,7 +25,7 @@ if (isset($data['Events']))
             if ($rowCount === 0) {
                 // 记录不存在，返回错误消息
                 http_response_code(404);
-                echo json_encode(["message" => "Record with HotelId $HotelId not found"]);
+                echo json_encode(["status" => "error1"]);
             } else {
                 // 更新记录的逻辑（与之前的代码相同）
                 $HotelId = $data['HotelId'];
@@ -70,12 +70,12 @@ if (isset($data['Events']))
                 // 设置HTTP状态码为200
                 http_response_code(200);
                 // 返回JSON响应
-                echo json_encode(["message" => "Update successful"]);
+                echo json_encode(["status" => "success"]);
             }
         } catch (Exception $e) {
             // 错误处理
             http_response_code(500);
-            echo json_encode(["message" => "Error: " . $e->getMessage()]);
+            echo json_encode(["status" => "Error: " . $e->getMessage()]);
         }
 
     } else if ($data['Events'] === false) {
@@ -101,9 +101,11 @@ if (isset($data['Events']))
 
         $pdo->exec($insertQuery);
 
+        $newID = $pdo->lastInsertId();
+
         http_response_code(200);
         // 返回JSON响应（可以根据需要设置响应内容）
-        echo json_encode(["message" => "新增成功!"]);
+        echo json_encode(["status" => "success", "newID" => $newID]);;
     }
 
 ?>

@@ -1,13 +1,13 @@
-<?php 
+<?php
 
 include '../Conn.php';
 
 $currentPage = $_GET["currentPage"];
 $pageSize = $_GET["pageSize"];
 $startIndex = ($currentPage - 1) * $pageSize;
-$ID = isset($_GET["HotelId"])? $_GET["HotelId"]: '';
+$ID = isset($_GET["HotelId"]) ? $_GET["HotelId"] : '';
 
-$query = "SELECT * FROM `HOTELINFO` WHERE ID LIKE '%$ID%' AND HOTELNAME != '寵物接送' LIMIT $startIndex, $pageSize";
+$query = "SELECT * FROM `HOTELINFO` WHERE ID LIKE '%$ID%' LIMIT $startIndex, $pageSize";
 $result = $pdo->query($query);
 
 if ($result) {
@@ -15,6 +15,22 @@ if ($result) {
 
     // print_r($result);
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        $picRow = array(); // 初始化 $picRow 数组
+    
+        for ($i = 1; $i <= 5; $i++) {
+            $picQuery = "SELECT `SEQ` FROM `HOTELPIC` WHERE `HOTELINFO_ID` = '{$row['ID']}' AND `HPIC` = '$i'";
+            $picResult = $pdo->query($picQuery);
+    
+            if ($picResult) {
+                $picData = $picResult->fetch(PDO::FETCH_ASSOC);
+                $picRow[] = $picData ? $picData['SEQ'] : null;
+            } else {
+                $picRow[] = null;
+            }
+        }
+    
+        $row['pics'] = $picRow; // 将 $picRow 数组添加到当前行
+    
         $list[] = $row;
     }
 
