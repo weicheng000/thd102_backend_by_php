@@ -11,7 +11,7 @@ try {
                 PHONE,
                 BRD,
                 `ADDRESS`
-            FROM petpago.MEMBER
+            FROM MEMBER
             WHERE EMAIL = :EMAIL;";
     
     $stmt = $pdo->prepare($sql);
