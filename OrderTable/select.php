@@ -20,7 +20,7 @@ if ($result) {
     }
 
     // 查詢總筆數
-    $countQuery = "SELECT COUNT(*) as total FROM `ORDER`";
+    $countQuery = "SELECT COUNT(*) as total FROM `ORDER` WHERE ID LIKE '%$ID%'";
     $countResult = $pdo->query($countQuery);
     $totalRecords = $countResult->fetch(PDO::FETCH_ASSOC)["total"];
 

@@ -33,7 +33,7 @@ if ($result) {
     }
 
     // 查詢總筆數
-    $countQuery = "SELECT COUNT(*) as total FROM `REPORTS`";
+    $countQuery = "SELECT COUNT(*) as total FROM `REPORTS` WHERE REPORTSMEMBER_ID LIKE '%$ID%'";
     $countResult = $pdo->query($countQuery);
     $totalRecords = $countResult->fetch(PDO::FETCH_ASSOC)["total"];
 
