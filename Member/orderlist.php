@@ -7,10 +7,11 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // 使用 JOIN 語句來選擇該會員的所有訂單
-    $sql_pre = "SELECT m.ID AS MEMBER_ID, m.EMAIL, o.ID AS ORDER_ID, o.ORDERDATE, o.USEPOINTS
-                FROM `MEMBER` m
-                LEFT JOIN `ORDER` o ON m.ID = o.MEMBER_ID
-                WHERE m.EMAIL = :id";
+    $sql_pre = "SELECT m.ID AS MEMBER_ID, m.EMAIL, o.ID AS ORDER_ID, DATE_FORMAT(o.ORDERDATE, '%Y年%m月%d日') AS ORDERDATE, o.USEPOINTS
+    FROM `MEMBER` m
+    LEFT JOIN `ORDER` o ON m.ID = o.MEMBER_ID
+    WHERE m.EMAIL = :id
+    ORDER BY o.ORDERDATE DESC";
 
     $stmt = $pdo->prepare($sql_pre);
     $stmt->bindParam(':id', $ID, PDO::PARAM_STR);
@@ -37,8 +38,8 @@ try {
                         od.END,
                         IF(
                         DATE_FORMAT(od.STARTDATE, '%Y-%m-%d') = DATE_FORMAT(od.ENDDATE, '%Y-%m-%d'),
-                        CONCAT(DATE_FORMAT(od.STARTDATE, '%m - %d'), ' | ', DATE_FORMAT(od.STARTDATE, '%H:%i')),
-                        CONCAT(DATE_FORMAT(od.STARTDATE, '%m-%d'), ' - ', DATE_FORMAT(od.ENDDATE, '%m-%d'))
+                        CONCAT(DATE_FORMAT(od.STARTDATE, '%m月%d日'), ' | ', DATE_FORMAT(od.STARTDATE, '%H:%i')),
+                        CONCAT(DATE_FORMAT(od.STARTDATE, '%m月%d日'), ' - ', DATE_FORMAT(od.ENDDATE, '%m月%d日'))
                         ) AS display_date,
                         pr.PRODUCTNAME,
                         IFNULL(hi.HOTELNAME, '寵物接送') AS display_hotelname
