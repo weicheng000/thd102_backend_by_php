@@ -1,6 +1,6 @@
 <?php
 
-$file = $_POST["name"];
+$file = $_FILES["profile"];
 echo $file
 
 ?>

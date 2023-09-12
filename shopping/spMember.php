@@ -11,7 +11,7 @@ $sql = "SELECT
             PHONE,
             `STATUS`,
             POINTS
-        FROM petpago.MEMBER
+        FROM MEMBER
         WHERE EMAIL = :EMAIL;";
 
 // 資料庫查詢並取值
