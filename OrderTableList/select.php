@@ -10,7 +10,7 @@ if (!isset($MemberId)) {
         od.HOTELINFO_ID,
       h.HOTELNAME,
       p.PRODUCTNAME,
-      od.AMOUNT,
+      od.AMOUNT * od.QUANTITY AS `AMOUNT`,
       od.NOWPRICE
     FROM ORDERDETAILS od
     LEFT JOIN  PRODUCT p
