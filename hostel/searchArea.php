@@ -3,16 +3,25 @@ include '../Conn.php';
 
 $key = $_GET['key'];
 
-if($key === '台北'){
+if ($key === '台北') {
+    $key = '北';
+}
+
+if ($key === '新北') {
     $key = '北';
 }
 
 try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query = "SELECT ID AS 'id', HOTELNAME AS 'name' FROM HOTELINFO WHERE HOTELADD LIKE CONCAT('%', :key, '%') LIMIT 0, 9";
+
+    $query = "SELECT ID AS 'id', HOTELNAME AS 'name' FROM HOTELINFO WHERE HOTELADD LIKE '%$key%' LIMIT 0, 9";
+
+    if ($key === '外島') {
+        $query = "SELECT ID AS 'id', HOTELNAME AS 'name' FROM HOTELINFO WHERE HOTELADD LIKE '%馬祖%' OR HOTELADD LIKE '%連江%' OR HOTELADD LIKE '%澎湖%' LIMIT 0, 9";
+    }
 
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':key', $key, PDO::PARAM_STR);
+    // $stmt->bindParam(':key', $key, PDO::PARAM_STR);
     $stmt->execute();
 
     $results = array();
